@@ -1,3 +1,4 @@
+
 ```bash
 wsl --unregister ArchLinux
 wsl --uninstall ArchLinux
@@ -33,15 +34,18 @@ EDITOR=vim visudo
 #找到并取消注释这一行
 '%wheel ALL=(ALL:ALL) ALL'
 
+# 安装必备的工具
+pacman -S git curl wget tree bat niri fuzzel ghostty xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard
+
+# 上述执行完成，可以直接使用此命令可以快速配置
+mkdir -p ~/github && cd ~/github && rm -rf ~/github/crowforkotlin.config.arch && git clone https://github.com/crowforkotlin/crowforkotlin.config.arch.git && cd crowforkotlin.config.arch && cp -rf .config .local ~/
+
 # VIM + ZSH 基础配置
 git clone https://github.com/crowforkotlin/QuickShell ~/QuickShell && cd ~/QuickShell
 sh init_vim.sh
 sh init_zsh.sh
 
-# 安装必备的工具
-pacman -S git curl wget tree bat niri fuzzel ghostty xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard
-
-# 切换用户级别
+# 切换用户级别 安装社区yay包管理器。
 su - wuya
 git clone https://aur.archlinux.org/yay.git && cd yay/ && makepkg -si
 
@@ -50,8 +54,10 @@ yay -S clipse-bin clipse-gui
 
 # 【核心，和windows剪贴板互通】
 vim ~/.config/niri/config.kdl
-cd ~ & mkdir github & git clone https://github.com/crowforkotlin/crowforkotlin.config.arch.git ./ 
 spawn-sh-at-startup "bash ~/.local/bin/wsl-clipboard-sync > /tmp/clipboard.log 2>&1"
+# 此脚本可参考下面的配置
+
+https://github.com/crowforkotlin/crowforkotlin.config.arch
 
 # 以上配置完成，接下来参考cofig-niri.md优化niri
 ```
