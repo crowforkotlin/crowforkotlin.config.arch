@@ -14,7 +14,9 @@ curl -I www.google.com
 
 # 安装pacman并下载VIM和sudo
 pacman -Syu
-pacman -S vim sudo
+pacman -S vim sudo git stow
+# 上述执行完成，可以直接使用此命令可以快速配置
+git clone https://github.com/crowforkotlin/crowforkotlin.config.arch ~/.dotfiles && cd ~/.dotfiles && stow --no-folding .
 
 # 设置系统语言，不然文件有的会有乱码报错等...
 vim /etc/locale.gen
@@ -37,8 +39,6 @@ EDITOR=vim visudo
 # 安装必备的工具
 pacman -S git curl wget tree bat niri fuzzel ghostty xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard
 
-# 上述执行完成，可以直接使用此命令可以快速配置
-mkdir -p ~/github && cd ~/github && rm -rf ~/github/crowforkotlin.config.arch && git clone https://github.com/crowforkotlin/crowforkotlin.config.arch.git && cd crowforkotlin.config.arch && cp -rf .config .local ~/
 
 # VIM + ZSH 基础配置
 git clone https://github.com/crowforkotlin/QuickShell ~/QuickShell && cd ~/QuickShell
