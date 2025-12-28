@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# --- 【核心 1】单例模式 (防止重复启动) ---
+# 使用 flock 尝试获取文件锁。如果获取失败，说明脚本已经在运行了，直接退出。
+# 这比 pidof 更精准，完美防止 Niri 重载配置时产生多个僵尸进程。
+exec 9> /tmp/wsl-clipboard-sync.lock
+if ! flock -n 9; then
+    exit 0
+fi
+
+# --- 【核心 2】补全环境变量 ---
+# Niri 启动环境是隔离的，必须手动指定 Windows 路径，否则找不到 powershell/clip
+export PATH=$PATH:/mnt/c/Windows/System32:/mnt/c/Windows
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+
+# --- 【核心 3】清理旧的子进程 ---
+# 即使脚本本身是单例，之前的 wl-paste 监听进程可能还在。
+# 启动前强制杀掉所有跟 clip.exe 相关的 wl-paste，确保干净。
+pkill -f "wl-paste.*clip.exe" 2>/dev/null
+
+# --- 【核心 4】等待系统就绪 ---
+# 给 Niri 一点时间初始化 Socket，防止 "Connection refused"
+sleep 1
+
+# ==========================================
+# 下面是你指定的逻辑 (无需改动)
+# ==========================================
+
+# Linux -> Windows (后台运行)
+wl-paste -t "text/plain;charset=utf-8" --primary --watch bash -c 'iconv -c -f UTF-8 -t UTF-16LE | clip.exe' 2>/dev/null &
+wl-paste -t "text/plain;charset=utf-8" --watch bash -c 'iconv -c -f UTF-8 -t UTF-16LE | clip.exe' 2>/dev/null &
+
+# Windows -> Linux (主循环，由 flock 锁住，确保只有一个在跑)
+last=""
+while true; do
+    current=$(timeout 2s powershell.exe -NoProfile -NonInteractive -Command \
+        "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; 
+         Get-Clipboard -Raw" 2>/dev/null | tr -d '\r')
+    
+    if [[ -n "$current" && "$current" != "$last" ]]; then
+        echo -n "$current" | wl-copy 2>/dev/null
+        echo -n "$current" | wl-copy --primary 2>/dev/null
+        last="$current"
+    fi
+    sleep 0.5
+done
