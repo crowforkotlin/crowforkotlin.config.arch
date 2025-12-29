@@ -37,7 +37,7 @@ EDITOR=vim visudo
 '%wheel ALL=(ALL:ALL) ALL'
 
 # 安装必备的工具
-pacman -S git curl wget tree bat niri fuzzel ghostty xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard
+pacman -S --needed base-devel git curl wget tree bat niri fuzzel ghostty swaybg btop xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard android-tools
 
 
 # VIM + ZSH 基础配置

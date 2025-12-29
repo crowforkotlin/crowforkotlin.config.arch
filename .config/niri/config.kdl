@@ -316,7 +316,9 @@ window-rule {
     draw-border-with-background false
 
     // 开启焦点
-    focus-ring { on }
+    focus-ring { 
+        on
+    }
     
 }
 window-rule {
