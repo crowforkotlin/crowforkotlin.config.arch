@@ -23,8 +23,7 @@ EOF
 source ~/.bashrc && curl -I www.google.com
 
 # 安装pacman并下载VIM和sudo
-pacman -Syu
-pacman -S vim sudo 
+pacman -Syu vim sudo 
 
 # 设置系统语言，不然文件有的会有乱码报错等...
 vim /etc/locale.gen
