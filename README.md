@@ -5,12 +5,22 @@ wsl --uninstall ArchLinux
 wsl --install ArchLinux
 wsl -d ArchLinux
 
-# 修改自己IP
-echo 'export http_proxy="192.168.0.54:7890"' >> ~/.bashrc
-echo 'export https_proxy="192.168.0.54:7890"' >> ~/.bashrc
-echo 'export GOPROXY=https://goproxy.cn,direct' >> ~/.bashrc
-source ~/.bashrc
-curl -I www.google.com
+# 初始化bash_profile
+cat << 'EOF' >> ~/.bash_profile
+# Load .bashrc if it exists
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+EOF
+
+# 配置代理
+cat << 'EOF' >> ~/.bashrc
+PROXY_HOST="192.168.0.54:7890"
+export http_proxy="$PROXY_HOST"
+export https_proxy="$PROXY_HOST"
+export GOPROXY=https://goproxy.cn,direct
+EOF
+source ~/.bashrc && curl -I www.google.com
 
 # 安装pacman并下载VIM和sudo
 pacman -Syu
