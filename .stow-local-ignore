@@ -1,0 +1,13 @@
+# 忽略 Git 相关
+^\.git$
+^\.gitignore$
+^\.gitmodules$
+
+# 忽略说明文档（匹配 README.md, config-niri.md 等）
+^.*\.md$
+^LICENSE.*
+^COPYING.*
+
+# 忽略编辑器的临时文件
+^\..*~
+^#.*#$
