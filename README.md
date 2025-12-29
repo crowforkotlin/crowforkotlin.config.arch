@@ -14,9 +14,7 @@ curl -I www.google.com
 
 # 安装pacman并下载VIM和sudo
 pacman -Syu
-pacman -S vim sudo git stow
-# 上述执行完成，可以直接使用此命令可以快速配置
-git clone https://github.com/crowforkotlin/crowforkotlin.config.arch ~/.dotfiles && cd ~/.dotfiles && stow --no-folding .
+pacman -S vim sudo 
 
 # 设置系统语言，不然文件有的会有乱码报错等...
 vim /etc/locale.gen
@@ -37,13 +35,16 @@ EDITOR=vim visudo
 '%wheel ALL=(ALL:ALL) ALL'
 
 # 安装必备的工具
-pacman -S --needed base-devel git curl wget tree bat niri fuzzel ghostty swaybg btop xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard android-tools
-
+pacman -S --needed base-devel git curl wget tree bat niri fuzzel ghostty swaybg btop xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard android-tools git stow github-cli
 
 # VIM + ZSH 基础配置
 git clone https://github.com/crowforkotlin/QuickShell ~/QuickShell && cd ~/QuickShell
 sh init_vim.sh
 sh init_zsh.sh
+
+# 上述执行完成，可以直接使用此命令可以快速配置
+git clone https://github.com/crowforkotlin/crowforkotlin.config.arch ~/.dotfiles && cd ~/.dotfiles && stow --no-folding .
+
 
 # 切换用户级别 安装社区yay包管理器。
 su - wuya
@@ -54,10 +55,7 @@ yay -S clipse-bin clipse-gui
 
 # 【核心，和windows剪贴板互通】
 vim ~/.config/niri/config.kdl
-spawn-sh-at-startup "bash ~/.local/bin/wsl-clipboard-sync > /tmp/clipboard.log 2>&1"
-# 此脚本可参考下面的配置
 
-https://github.com/crowforkotlin/crowforkotlin.config.arch
-
+# https://github.com/crowforkotlin/crowforkotlin.config.arch
 # 以上配置完成，接下来参考cofig-niri.md优化niri
 ```
