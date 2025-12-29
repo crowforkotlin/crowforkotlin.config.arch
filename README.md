@@ -44,7 +44,7 @@ EDITOR=vim visudo
 '%wheel ALL=(ALL:ALL) ALL'
 
 # 安装必备的工具
-pacman -S --needed base-devel git curl wget tree bat niri fuzzel ghostty swaybg btop xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard android-tools git stow github-cli
+pacman -S --noconfirm --needed base-devel git curl wget tree bat niri fuzzel ghostty swaybg btop xdg-desktop-portal-gtk xwayland-satellite xdg-desktop-portal-gnome wl-clipboard android-tools git stow github-cli
 
 # VIM + ZSH 基础配置
 git clone https://github.com/crowforkotlin/QuickShell ~/QuickShell && cd ~/QuickShell
