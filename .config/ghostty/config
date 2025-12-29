@@ -39,7 +39,7 @@ palette = 14=#8be9fd
 palette = 15=#ffffff
 foreground = f8f8f2
 background = 282a36
-background-opacity = 0.75
+background-opacity = 0.4
 window-decoration = false
 
 # ===

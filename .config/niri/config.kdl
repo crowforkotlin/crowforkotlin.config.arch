@@ -304,17 +304,20 @@ animations {
     // slowdown 3.0
 }
 
-// Window rules let you adjust behavior for individual windows.
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Window-Rules
 
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
 window-rule {
-    // 使用正则表达式匹配两种常见的 app-id
     match app-id="com.mitchellh.ghostty"
-    geometry-corner-radius 12
     clip-to-geometry true
+
+    // 设置圆角
+    geometry-corner-radius 12
+
+    // 禁止在该窗口下渲染背景色
+    draw-border-with-background false
+
+    // 开启焦点
+    focus-ring { on }
+    
 }
 window-rule {
     // This regular expression is intentionally made as specific as possible,
