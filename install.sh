@@ -4,7 +4,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/.config.bak.$(date +%Y%m%d%H%M%S)"
 
-TARGETS=(ghostty niri nvim tmux matugen fcitx5)
+TARGETS=(ghostty niri nvim tmux matugen fcitx5 DankMaterialShell)
 
 info() { printf "\033[1;34m[INFO]\033[0m  %s\n" "$*"; }
 warn() { printf "\033[1;33m[WARN]\033[0m  %s\n" "$*"; }
