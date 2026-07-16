@@ -13,3 +13,6 @@
 [submodule "tmux"]
 	path = tmux
 	url = https://github.com/crowforkotlin/crowforkotlin.config.tmux.git
+[submodule "fcitx5"]
+	path = fcitx5
+	url = https://github.com/crowforkotlin/crowforkotlin.config.fcitx5
