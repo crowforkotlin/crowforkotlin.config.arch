@@ -37,6 +37,7 @@ setup_pacman() {
     ffmpegthumbnailer gst-plugins-base gst-plugins-good gst-libav \
     ddcutil obs-studio inter-font ttf-fira-code zenity baobab gdu \
     dnsmasq clang cmake os-prober grub efibootmgr dconf-editor wine \
+    fsearch \
     base-devel
   info "pacman packages installed."
 }
@@ -85,7 +86,7 @@ setup_fonts() {
   mkdir -p "$fontconfig_dir"
 
   if [ ! -f "$fontconfig_dir/fonts.conf" ]; then
-    cat > "$fontconfig_dir/fonts.conf" << 'EOF'
+    cat >"$fontconfig_dir/fonts.conf" <<'EOF'
 <?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
@@ -212,7 +213,7 @@ setup_fcitx5() {
   local rime_dir="$HOME/.local/share/fcitx5/rime"
   mkdir -p "$rime_dir"
   if [ ! -f "$rime_dir/default.custom.yaml" ]; then
-    cat > "$rime_dir/default.custom.yaml" << 'EOF'
+    cat >"$rime_dir/default.custom.yaml" <<'EOF'
 patch:
   schema_list:
     - schema: rime_ice
