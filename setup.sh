@@ -37,7 +37,7 @@ setup_pacman() {
     ffmpegthumbnailer gst-plugins-base gst-plugins-good gst-libav \
     ddcutil obs-studio inter-font ttf-fira-code zenity baobab gdu \
     dnsmasq clang cmake os-prober grub efibootmgr dconf-editor wine \
-    fsearch \
+    fsearch less \
     base-devel
   info "pacman packages installed."
 }
