@@ -19,3 +19,6 @@
 [submodule "DankMaterialShell"]
 	path = DankMaterialShell
 	url = https://github.com/crowforkotlin/crowforkotlin.config.dms
+[submodule "satty"]
+	path = satty
+	url = https://github.com/crowforkotlin/crowforkotlin.config.satty

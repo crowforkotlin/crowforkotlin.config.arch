@@ -5,7 +5,7 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/.config.bak.$(date +%Y%m%d%H%M%S)"
 
 # ~/.config/ targets
-CONFIG_TARGETS=(ghostty niri nvim tmux matugen fcitx5)
+CONFIG_TARGETS=(ghostty niri nvim tmux matugen fcitx5 satty)
 
 # special targets: name -> destination path
 declare -A EXTRA_TARGETS=(
