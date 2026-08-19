@@ -58,7 +58,7 @@ setup_yay() {
 
   info "Installing AUR packages via yay..."
   yay -Syu --noconfirm \
-    rime-ice-git ttf-jetbrains-maple-mono-nf-xx-xx \
+    niri-sidebar-git rime-ice-git ttf-jetbrains-maple-mono-nf-xx-xx \
     visual-studio-code-bin aliyun-adrive-bin clash-verge-rev-bin \
     linuxqq-clipsync-git satty paru android-studio \
     ab-download-manager-bin wps-office-cn
