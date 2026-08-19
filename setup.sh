@@ -30,7 +30,7 @@ setup_archlinuxcn() {
 setup_pacman() {
   info "Installing pacman packages..."
   sudo pacman -Syu --needed --noconfirm \
-    nvm fvm jenv pyenv android-tools net-tools tree bat fastfetch \
+    noto-fonts-emoji nvm fvm jenv pyenv android-tools net-tools tree bat fastfetch \
     curl neovim vim ghostty fcitx5-im fcitx5-rime \
     ttf-jetbrains-mono-nerd wl-clipboard cliphist tmux ripgrep btop \
     zram-generator p7zip reflector jq imv mpv \
