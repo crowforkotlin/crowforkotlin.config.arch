@@ -31,8 +31,7 @@ setup_pacman() {
   info "Installing pacman packages..."
   sudo pacman -Syu --needed --noconfirm \
     noto-fonts-emoji nvm fvm jenv pyenv android-tools net-tools tree bat fastfetch \
-    curl neovim vim ghostty fcitx5-im fcitx5-rime \
-    ttf-jetbrains-mono-nerd wl-clipboard cliphist tmux ripgrep btop \
+    curl neovim vim ghostty fcitx5-im fcitx5-rime btrfs-progs ttf-jetbrains-mono-nerd wl-clipboard cliphist tmux ripgrep btop \
     zram-generator p7zip reflector jq imv mpv \
     ffmpegthumbnailer gst-plugins-base gst-plugins-good gst-libav \
     ddcutil obs-studio inter-font ttf-fira-code zenity baobab gdu \
