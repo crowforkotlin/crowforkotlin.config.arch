@@ -15,8 +15,11 @@ has() { command -v "$1" &>/dev/null; }
 setup_archlinuxcn() {
   info "Checking archlinuxcn repository..."
   if ! grep -q "archlinuxcn" /etc/pacman.conf 2>/dev/null; then
-    echo "[archlinuxcn]" | sudo tee -a /etc/pacman.conf
-    echo "Server = https://repo.archlinuxcn.org/\$arch" | sudo tee -a /etc/pacman.conf
+    {
+      echo "[archlinuxcn]"
+      echo "Server = https://repo.archlinuxcn.org/\$arch"
+      echo "SigLevel = Optional TrustAll"
+    } | sudo tee -a /etc/pacman.conf
     sudo pacman -Sy --noconfirm
     sudo pacman -S --needed --noconfirm archlinuxcn-keyring
     info "archlinuxcn added."
@@ -37,6 +40,8 @@ setup_pacman() {
     ddcutil obs-studio inter-font ttf-fira-code zenity baobab gdu \
     dnsmasq clang cmake os-prober grub efibootmgr dconf-editor wine \
     fsearch less \
+    niri quickshell matugen satty wf-recorder \
+    dgop accountsservice \
     base-devel
   info "pacman packages installed."
 }
@@ -56,11 +61,12 @@ setup_yay() {
   fi
 
   info "Installing AUR packages via yay..."
-  yay -Syu --noconfirm \
+  yay -Syu --noconfirm --needed \
     niri-sidebar-git rime-ice-git ttf-jetbrains-maple-mono-nf-xx-xx \
     visual-studio-code-bin aliyun-adrive-bin clash-verge-rev-bin \
-    linuxqq-clipsync-git satty paru android-studio \
-    ab-download-manager-bin wps-office-cn
+    linuxqq-clipsync-git paru android-studio \
+    ab-download-manager-bin wps-office-cn \
+    dms-shell-git
   info "yay packages installed."
 }
 
@@ -73,7 +79,7 @@ setup_paru() {
   fi
 
   info "Installing AUR packages via paru..."
-  paru -S --noconfirm ttf-maplemono-nf-cn-unhinted wf-recorder
+  paru -S --noconfirm --needed ttf-maplemono-nf-cn-unhinted
   info "paru packages installed."
 }
 
@@ -109,10 +115,11 @@ EOF
   if [ ! -d "$k2d_dir" ]; then
     info "Downloading K2D font..."
     mkdir -p "$k2d_dir"
-    curl -s "https://fonts.google.com/download/list?family=K2D" |
-      sed '1s/^)]}'\''//' |
-      jq -r '.manifest.fileRefs[] | select(.url != null and (.filename | endswith(".ttf"))) | "\(.url)\t\(.filename)"' |
-      xargs -r -n 2 -P 8 sh -c 'curl -L -# -o "$HOME/.local/share/fonts/truetype/K2D/$2" "$1"' _
+    curl -fsSL "https://fonts.google.com/download/list?family=K2D" 2>/dev/null |
+      sed '1s/^)]}'\''//' 2>/dev/null |
+      jq -r '.manifest.fileRefs[] | select(.url != null and (.filename | endswith(".ttf"))) | "\(.url)\t\(.filename)"' 2>/dev/null |
+      xargs -r -n 2 -P 8 sh -c 'curl -fsSL -o "$HOME/.local/share/fonts/truetype/K2D/$2" "$1" 2>/dev/null' _ \
+      || warn "K2D font download failed (network/proxy?), skipping."
     info "K2D font installed."
   else
     info "K2D font already installed, skipping."
@@ -120,7 +127,8 @@ EOF
 
   # GTK font
   info "Setting GTK font..."
-  gsettings set org.gnome.desktop.interface font-name 'K2D:weight=semibold 11'
+  gsettings set org.gnome.desktop.interface font-name 'K2D:weight=semibold 11' \
+    || warn "Failed to set GTK font via gsettings (needs a D-Bus session), skipping."
 
   # Refresh font cache
   fc-cache -fv
@@ -158,7 +166,7 @@ setup_memory() {
     echo -e "[zram0]\nzram-size = min(ram, 8192)\ncompression-algorithm = zstd" |
       sudo tee /etc/systemd/zram-generator.conf
     sudo systemctl daemon-reload
-    sudo systemctl restart systemd-zram-setup@zram0.service
+    sudo systemctl restart systemd-zram-setup@zram0.service || warn "zram service failed to start, continuing."
     info "zram configured."
   else
     info "zram already configured."
@@ -176,14 +184,16 @@ setup_memory() {
     info "Swap already configured."
   fi
 
-  zramctl && swapon --show && free -h
+  zramctl || true
+  swapon --show || true
+  free -h
 }
 
 # ── brightness ─────────────────────────────────────────────
 
 setup_brightness() {
   info "Configuring brightness control (ddcutil)..."
-  sudo modprobe i2c_dev
+  sudo modprobe i2c_dev 2>/dev/null || warn "i2c_dev module unavailable (VM/container?), skipping."
   echo "i2c_dev" | sudo tee /etc/modules-load.d/i2c_dev.conf
   sudo pacman -S --needed --noconfirm ddcutil
   sudo usermod -aG i2c "$USER"

@@ -23,7 +23,7 @@ Personal configuration files for Arch Linux.
 ### Dotfiles sync
 
 ```bash
-git clone https://github.com/crowforkotlin/dotfiles.git ~/.dotfiles
+git clone https://github.com/crowforkotlin/crowforkotlin.config.arch.git ~/.dotfiles
 cd ~/.dotfiles
 ./install.sh
 ```
@@ -48,4 +48,4 @@ Install packages (pacman / yay / paru), configure fonts, cursor, swap, and brigh
 ## Documentation
 
 Full setup guide:
-[`Arch-Linux-Config.md`](https://github.com/crowforkotlin/crowforkotlin.github.io-source/blob/master/source/_posts/Unix/Arch-Linux-Config.md)
+[`Arch-Linux-Config.md`](https://github.com/crowforkotlin/crowforkotlin.github.io-source/blob/main/source/_posts/Unix/Arch-Linux-Config.md)

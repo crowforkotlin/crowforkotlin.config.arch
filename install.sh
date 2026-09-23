@@ -9,7 +9,8 @@ CONFIG_TARGETS=(ghostty niri nvim tmux matugen fcitx5 satty)
 
 # special targets: name -> destination path
 declare -A EXTRA_TARGETS=(
-  [DankMaterialShell]="$HOME/.local/share/quickshell"
+  [DankMaterialShell]="$HOME/.config/DankMaterialShell"
+  [DankMaterialShell-quickshell]="$HOME/.local/share/quickshell"
 )
 
 info() { printf "\033[1;34m[INFO]\033[0m  %s\n" "$*"; }
@@ -72,7 +73,8 @@ done
 
 # Extra targets with custom paths
 for name in "${!EXTRA_TARGETS[@]}"; do
-  link_config "$name" "$DOTFILES_DIR/$name" "${EXTRA_TARGETS[$name]}"
+  src_name="${name%%-*}"
+  link_config "$name" "$DOTFILES_DIR/$src_name" "${EXTRA_TARGETS[$name]}"
 done
 
 # ── Summary ────────────────────────────────────────────────
